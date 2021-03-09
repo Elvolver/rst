@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <div th:fragment="greed" class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Список запросов</h3>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Номер ТТ</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="issue: ${issues}">
+                            <td th:text="${issue.getId}"></td>
+                            <td th:text="${issue.number}"></td>
+                            <td>
+                                <form th:method="DELETE" th:action="@{/issue/{id}(id = ${issue.getId})}">
+                                    <button class="btn btn-navbar" type="submit" data-widget="navbar-search">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:fragment="addForm" class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Добавить запрос</h3>
+                </div>
+                <form th:action="${action}" th:method="${method}">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="issueNumber">Номер запроса ТТ</label>
+                            <input th:value="${issue?.id}" type="number" class="form-control" name="issueNumber" id="issueNumber" placeholder="Введите номер запроса ТТ">
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</html>

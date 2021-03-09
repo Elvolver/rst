@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="blocks/common/head :: head"></head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <nav th:insert="blocks/common/navbar :: navbar"></nav>
+    <aside th:insert="blocks/common/mainSidebar :: mainSidebar"></aside>
+    <div class="content-wrapper">
+        <div th:insert="blocks/common/contentHeader :: contentHeader"></div>
+        <div class="content">
+            <div class="container-fluid">
+                <div th:insert="blocks/issue/issue :: addForm(method = 'patch', action = '/issue/' + ${issue.id} + '/edit/')"></div>
+            </div>
+        </div>
+    </div>
+    <footer th:insert="blocks/common/mainFooter :: mainFooter"></footer>
+</div>
+<div th:insert="blocks/common/requaredScripts :: requaredScripts"></div>
+</body>
+</html>
