@@ -1,59 +1,81 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-    <div th:fragment="greed" class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Список запросов</h3>
-                </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Номер ТТ</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="issue: ${issues}">
-                            <td th:text="${issue.getId}"></td>
-                            <td th:text="${issue.number}"></td>
-                            <td>
-                                <form th:method="DELETE" th:action="@{/issue/{id}(id = ${issue.getId})}">
-                                    <button class="btn btn-navbar" type="submit" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </form>
+<div th:fragment="greed" class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Список запросов</h3>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Номер ТТ</th>
+                        <th>Релиз</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="issue: ${issues}">
 
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        <td th:text="${issue.getId}"></td>
+                        <td th:text="${issue.number}"></td>
+                        <td th:text="${issue.release}"></td>
+                        <td>
+                            <form th:method="DELETE" th:action="@{/issue/{id}(id = ${issue.getId})}">
+                                <button class="btn btn-navbar" type="submit" data-widget="navbar-search">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </form>
+
+                        </td>
+                        <td>
+                            <button class="btn btn-navbar" type="submit" data-widget="navbar-search">
+                                <a th:href="@{/issue/{id}/edit(id = ${issue.getId})}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 
-    <div th:fragment="addForm" class="row">
-        <div class="col-md-6">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Добавить запрос</h3>
-                </div>
-                <form th:action="${action}" th:method="${method}">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="issueNumber">Номер запроса ТТ</label>
-                            <input th:value="${issue?.id}" type="number" class="form-control" name="issueNumber" id="issueNumber" placeholder="Введите номер запроса ТТ">
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Добавить</button>
-                    </div>
-                </form>
+<div th:fragment="addForm(actionName, action, method)" class="row">
+    <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 th:text="${actionName} + ' запрос'" class="card-title"></h3>
             </div>
+            <form th:action="${action}" th:method="${method}">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="issueNumber">Номер запроса ТТ</label>
+                        <input th:value="${issue?.number}" type="number" class="form-control" name="issueNumber"
+                               id="issueNumber" placeholder="Введите номер запроса ТТ">
+                    </div>
+                    <div class="form-group">
+                        <label for="release">Название релиза</label>
+                        <select class="form-control" name="release" id="release">
+                            <option th:each="release: ${releases}"
+                                    th:text="${release.title}"
+                                    th:value="${release.id}"
+                                    th:th:selected="${release.id == issue?.release?.id}"
+                            ></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button th:text="${actionName}" type="submit" class="btn btn-primary"></button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 </html>

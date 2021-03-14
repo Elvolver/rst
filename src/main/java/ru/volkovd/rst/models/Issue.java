@@ -1,8 +1,6 @@
 package ru.volkovd.rst.models;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Entity
 public class Issue {
@@ -11,10 +9,20 @@ public class Issue {
     private Long id;
     private Long number;
 
-    public Issue() {}
+    @ManyToOne
+    @JoinColumn(name = "release_id", nullable = true)
+    private Release release;
+
+    public Issue() {
+    }
 
     public Issue(Long number) {
         this.number = number;
+    }
+
+    public Issue(Long number, Release release) {
+        this.number = number;
+        this.release = release;
     }
 
     public Long getId() {
@@ -31,5 +39,13 @@ public class Issue {
 
     public void setNumber(Long number) {
         this.number = number;
+    }
+
+    public Release getRelease() {
+        return release;
+    }
+
+    public void setRelease(Release release) {
+        this.release = release;
     }
 }
